@@ -13,8 +13,8 @@ on:
   push:
     branches: 
       - master
-  schedule:
-    - cron: 55 19 */5 * *
+  #schedule:
+  #  - cron: 55 19 */5 * *
   # release:
   #   types: [published]
 
