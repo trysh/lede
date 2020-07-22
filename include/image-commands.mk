@@ -269,7 +269,7 @@ define Build/xor-image
 endef
 
 define Build/check-size
-	@[ $$(($(subst k,* 1024,$(subst m, * 1024k,$(1))))) -ge "$$(stat -c%s $@)" ] || { \
+	@[ $$(($(subst k,* 1024,$(subst m, * 1024k,$(if $(1),$(1),$(IMAGE_SIZE)))))) -ge "$$(stat -c%s $@)" ] || { \
 		echo "WARNING: Image file $@ is too big" >&2; \
 		rm -f $@; \
 	}
@@ -308,6 +308,13 @@ define Build/openmesh-image
 		"$@-fwupgrade.cfg" "fwupgrade.cfg" \
 		"$(call param_get_default,kernel,$(1),$(IMAGE_KERNEL))" "kernel" \
 		"$(call param_get_default,rootfs,$(1),$@)" "rootfs"
+endef
+
+define Build/qsdk-ipq-factory-mmc
+	$(TOPDIR)/scripts/mkits-qsdk-ipq-image.sh \
+		$@.its kernel $(IMAGE_KERNEL) rootfs $(IMAGE_ROOTFS)
+	PATH=$(LINUX_DIR)/scripts/dtc:$(PATH) mkimage -f $@.its $@.new
+	@mv $@.new $@
 endef
 
 define Build/qsdk-ipq-factory-nand
@@ -413,4 +420,11 @@ endef
 define Build/kernel2minor
 	kernel2minor -k $@ -r $@.new $(1)
 	mv $@.new $@
+endef
+
+# Convert a raw image into a $1 type image.
+# E.g. | qemu-image vdi
+define Build/qemu-image
+	qemu-img convert -f raw -O $1 $@ $@.new
+	@mv $@.new $@
 endef
