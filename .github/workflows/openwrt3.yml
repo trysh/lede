@@ -11,7 +11,7 @@ name: OpenWrt-CI3
 
 on:
   schedule:
-    - cron: 29 09 * * *
+    - cron: 37 09 * * *
   #push:
   #  tags:
    #   - '*'
