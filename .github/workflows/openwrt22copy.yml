@@ -10,11 +10,11 @@
 name: OpenWrt-CI22copy
 
 on:
-  #push:
-  #  branches: 
-  #    - master
+  push:
+    branches: 
+      - master
    schedule:
-     - cron: 02 15 * * *
+     - cron: 34 15 * * *
   # release:
   #   types: [published]
 
@@ -68,10 +68,6 @@ jobs:
 
       - name: Generate configuration file
         run: |
-          cd package/lean
-          rm -rf luci-app-ssr-plus
-          git clone https://github.com/fw876/helloworld.git
-          cp -r helloworld/luci-app-ssr-plus ./
           rm -f ./.config*
           touch ./.config
 
