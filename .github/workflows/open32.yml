@@ -12,9 +12,9 @@ name: OpenWrt-CI32
 on:
   #schedule:
   #  - cron: 44 09 * * *
-  #push:
-  #  tags:
-   #   - '*'
+  push:
+    tags:
+      - '*'
 
 env:
   SSH_ACTIONS: true
@@ -57,8 +57,6 @@ jobs:
         if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
          
       - name: Generate configuration file
-        env:
-          SSH_ACTIONS: true
         run: make defconfig
 
       - name: Make download
