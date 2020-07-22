@@ -7,11 +7,11 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 # 
 
-name: OpenWrt-CI3
+name: OpenWrt-CI32
 
 on:
-  schedule:
-    - cron: 44 09 * * *
+  #schedule:
+  #  - cron: 44 09 * * *
   #push:
   #  tags:
    #   - '*'
