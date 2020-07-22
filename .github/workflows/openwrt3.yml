@@ -11,10 +11,13 @@ name: OpenWrt-CI3
 
 on:
   schedule:
-    - cron: 37 09 * * *
+    - cron: 42 09 * * *
   #push:
   #  tags:
    #   - '*'
+
+env:
+  SSH_ACTIONS: true
 
 jobs:
 
@@ -48,7 +51,11 @@ jobs:
           sed -i 's/\"#src-git\"/\"src-git\"/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-
+      
+      - name: SSH connection to Actions
+        uses: P3TERX/debugger-action@master
+        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
+         
       - name: Generate configuration file
         env:
           SSH_ACTIONS: true
