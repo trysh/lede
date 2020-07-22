@@ -7,11 +7,11 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 # 
 
-name: OpenWrt-CI
+name: OpenWrt-CI3
 
-#on:
-  #schedule:
-  #  - cron: 16 08 * * *
+on:
+  schedule:
+    - cron: 29 09 * * *
   #push:
   #  tags:
    #   - '*'
@@ -50,6 +50,8 @@ jobs:
           ./scripts/feeds install -a
 
       - name: Generate configuration file
+        env:
+          SSH_ACTIONS: true
         run: make defconfig
 
       - name: Make download
