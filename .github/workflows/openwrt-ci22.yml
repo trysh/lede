@@ -14,7 +14,7 @@ on:
   #  branches: 
   #    - master
    schedule:
-     - cron: 46 08 * * *
+     - cron: 54 14 * * *
   # release:
   #   types: [published]
 
@@ -68,6 +68,10 @@ jobs:
 
       - name: Generate configuration file
         run: |
+          cd package/lean
+          rm -rf luci-app-ssr-plus
+          git clone https://github.com/fw876/helloworld.git
+          cp -r helloworld/luci-app-ssr-plus ./
           rm -f ./.config*
           touch ./.config
 
