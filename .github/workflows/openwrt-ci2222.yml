@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI222
+name: OpenWrt-CI2222
 
 on:
   push:
@@ -30,17 +30,18 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: master
-
+      
+      - name: name1
+        run: |
+          sed -i 's/\"#src-git\"/\"src-git\"/g' ./feeds.conf.default
+          cat ./feeds.conf.default
+          sed -i 's/#src-git/src-git/g' ./feeds.conf.default
+          cat ./feeds.conf.default
+          
       - name: Space cleanup
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          cat >> ttest <<EOF
-          CONFIG_TARGET_x86=y
-          # CONFIG_TARGET_x86_64=y
-          CONFIG_TARGET_x86_64_Generic=y
-          EOF
-          cat ttest
           docker rmi `docker images -q`
           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
@@ -161,17 +162,23 @@ jobs:
           # CONFIG_PACKAGE_luci-app-openvpn=y
           # CONFIG_PACKAGE_luci-app-openvpn-server=y
           # CONFIG_PACKAGE_luci-app-qbittorrent=y
+          CONFIG_PACKAGE_luci-app-ssr-plus=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
           # CONFIG_PACKAGE_luci-app-ttyd=y
           # CONFIG_PACKAGE_luci-app-v2ray-server=y
           # CONFIG_PACKAGE_luci-app-verysync=y
           # CONFIG_PACKAGE_luci-app-webadmin=y
           # CONFIG_PACKAGE_luci-app-wireguard=y
           # CONFIG_PACKAGE_luci-app-wrtbwmon=y
+          CONFIG_PACKAGE_open-vm-tools=y
           EOF
 
           # LuCI主题:
