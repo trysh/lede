@@ -9,11 +9,11 @@
 
 name: OpenWrt-CI22copy
 on:
-  push:
-    branches: 
-      - master
-  schedule:
-    - cron: 38 15 * * *
+  #push:
+  #  branches: 
+  #    - master
+  #schedule:
+  #  - cron: 38 15 * * *
 
 jobs:
 
