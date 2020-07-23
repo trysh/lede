@@ -32,15 +32,24 @@ jobs:
         with:
           ref: master
 
-      - name: SSH connection to Actions1
-        uses: P3TERX/debugger-action@master
-        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
-        
+      
       - name: Update feeds1
         run: |
           sed -i 's/\"#src-git\"/\"src-git\"/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          
+      - name: SSH connection to Actions1
+        uses: P3TERX/debugger-action@master
+        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
+        
+      - name: SSH connection to Actions2
+        uses: P3TERX/debugger-action@master
+        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
+        
+      - name: SSH connection to Actions3
+        uses: P3TERX/debugger-action@master
+        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
         
       - name: Space cleanup
         env:
